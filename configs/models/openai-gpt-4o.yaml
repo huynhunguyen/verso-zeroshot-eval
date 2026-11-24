@@ -1,0 +1,21 @@
+name: openai-gpt-4o
+family: openai
+hf_id: ""
+served_name: gpt-4o
+vision: true
+logprobs: false
+structured_output: json_schema
+thinking: false
+max_model_len: 128000
+base_url: https://api.openai.com/v1
+api_key_env: OPENAI_API_KEY
+max_tokens_param: max_tokens
+send_seed: true
+temperature: 1.0
+max_tokens: 4096
+recommended_decoding:
+  temperature: 1.0
+  source: OpenAI Chat Completions API default
+notes: >-
+  OpenAI GPT-4o standard multimodal baseline. Pass --model gpt-4o-2024-11-20 (or latest pinned snapshot)
+  if you want to freeze an exact dated snapshot.

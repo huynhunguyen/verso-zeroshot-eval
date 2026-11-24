@@ -1,0 +1,22 @@
+name: openai-o3
+family: openai
+hf_id: ""
+served_name: o3
+vision: true
+logprobs: false
+structured_output: json_schema
+thinking: true
+max_model_len: 200000
+base_url: https://api.openai.com/v1
+api_key_env: OPENAI_API_KEY
+max_tokens_param: max_completion_tokens
+send_seed: false
+temperature: null
+max_tokens: 16384
+recommended_decoding:
+  temperature: null
+  extra:
+    reasoning_effort: medium
+  source: OpenAI o3 Chat Completions API default (reasoning_effort=medium)
+notes: >-
+  OpenAI o3 reasoning multimodal baseline. Uses max_completion_tokens and omits temperature.

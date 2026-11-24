@@ -1,0 +1,21 @@
+name: gemini-3-flash
+family: gemini
+hf_id: ""
+served_name: gemini-3-flash-preview
+vision: true
+logprobs: false
+structured_output: none
+thinking: true
+max_model_len: 1000000
+base_url: https://generativelanguage.googleapis.com/v1beta/openai/
+api_key_env: GEMINI_API_KEY
+max_tokens_param: max_tokens
+send_seed: false
+temperature: 1.0
+max_tokens: 8192
+recommended_decoding:
+  temperature: 1.0
+  source: Google AI Studio Gemini 3 Flash default (override model snapshot with --model if needed)
+notes: >-
+  Google Gemini Flash via the official OpenAI-compatible endpoint.
+  Fast and economical commercial baseline; override model ID with --model if needed.

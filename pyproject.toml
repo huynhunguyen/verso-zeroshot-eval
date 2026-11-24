@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "verso-zeroshot-eval"
+version = "0.1.0"
+description = "Standalone zero-shot MLLM evaluation package extracted from VERSO (1,765 VN circuit problems, 245 diagrams)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "sympy==1.14.0",
+    "pydantic==2.13.4",
+    "openai==2.44.0",
+    "PyYAML==6.0.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.1.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
