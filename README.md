@@ -1,14 +1,14 @@
-# VERSO — Gói Đánh Giá Zero-Shot Cho Mô Hình Thương Mại
+# VERSO — Đánh Giá Zero-Shot Cho Mô Hình Thương Mại
 
-Repo gọn nhẹ được tách riêng từ dự án **VERSO** để chạy thực nghiệm baseline **MLLM Zero-shot** (thí nghiệm `E-20`) trên các API thương mại (**Google Gemini** và **OpenAI**), với **cùng 100% tập đề, ảnh, prompt và bộ chấm tất định** như hệ thống chính.
+Repo phục vụ mục đích chạy thực nghiệm baseline **MLLM Zero-shot** trên các API thương mại (**Google Gemini** và **OpenAI**).
 
-## 1. Trong repo này có gì?
+## 1. Thành phần
 
 - **Dữ liệu đánh giá VN (`datasets/`):**
-  - `1.765` câu hỏi chuẩn trong [circuits_full.json](datasets/circuit-dataset/circuits_full.json) (gồm `1.710` câu định lượng chấm tự động + `55` câu đáp án bằng lời để chờ chấm tay theo quy tắc D29).
+  - `1.765` câu hỏi chuẩn trong [circuits_full.json](datasets/circuit-dataset/circuits_full.json) (gồm `1.710` câu định lượng chấm tự động + `55` câu đáp án bằng lời để chờ chấm tay).
   - Đúng `245` ảnh sơ đồ mạch trong `datasets/circuit-dataset/images/` (tổng ~3,4 MB).
 - **Prompt chuẩn cố định (`configs/prompts/`):**
-  - Mặc định dùng **`mllm_zero_shot_v1.txt`** (1 lượt gọi duy nhất: ảnh + đề → giải từng bước → chốt JSON cuối câu). **Không sửa nội dung file prompt** để giữ mã hash khớp tuyệt đối với repo chính.
+  - Mặc định dùng **`mllm_zero_shot_v1.txt`** (1 lượt gọi duy nhất: ảnh + đề → giải từng bước → chốt JSON cuối câu). **Không sửa nội dung file prompt** để giữ mã hash khớp tuyệt đối với các bài thí nghiệm.
 - **Cấu hình model sẵn (`configs/models/`):**
   - **Google Gemini** (qua OpenAI-compatible endpoint của Google AI Studio):
     - `gemini-3-pro.yaml`
@@ -19,7 +19,7 @@ Repo gọn nhẹ được tách riêng từ dự án **VERSO** để chạy th�
     - `openai-o3.yaml`
 - **Cơ chế an toàn khi chạy API dài:**
   - Tự động retry theo *exponential backoff* khi gặp lỗi `429 RateLimit` / `5xx` / timeout.
-  - Tự động lưu **cache SQLite** (`.cache/llm.sqlite`) và **checkpoint từng câu** (`runs/<run_id>/checkpoint_questions.jsonl`) — lỡ mất mạng hoặc tắt máy có thể chạy tiếp bằng `--resume <RUN_ID>` mà **không tốn tiền gọi lại các câu đã xong**.
+  - Tự động lưu **cache SQLite** (`.cache/llm.sqlite`) và **checkpoint từng câu** (`runs/<run_id>/checkpoint_questions.jsonl`) — lỡ mất mạng hoặc tắt máy có thể chạy tiếp bằng `--resume <RUN_ID>`.
 
 ---
 
@@ -114,7 +114,7 @@ python -m verso_eval.baselines.mllm_zero_shot run \
 
 ---
 
-## 5. Xem kết quả & Bàn giao lại cho nhóm
+## 5. Xem kết quả 
 
 Sau khi chạy xong (hoặc đang chạy dở), chạy lệnh sau để xem độ chính xác định lượng (trên `1.710` câu chấm tự động), từng chủ đề (`DLO`, `RLC`, `TD`, `DDT`, `CH`), lỗi gọi API và tổng token:
 
@@ -124,6 +124,3 @@ python scripts/check_accuracy.py --latest
 python scripts/check_accuracy.py <RUN_ID>
 ```
 
-**Dữ liệu cần gửi lại sau khi chạy xong:**
-- Toàn bộ thư mục `runs/<RUN_ID>/` (gồm `config.json`, `meta.json`, `summary.json`, `trace.jsonl`) và file `runs/registry.csv`.
-- **Không gửi** file `.env` và không cần gửi `.cache/llm.sqlite`.
